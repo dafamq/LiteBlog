@@ -15,6 +15,13 @@
       "when": 1730106246798,
       "tag": "0001_yummy_doctor_strange",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1730114987441,
+      "tag": "0002_eminent_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }
