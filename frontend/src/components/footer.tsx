@@ -1,5 +1,5 @@
 const Footer = () => {
-	return <div className="text-center w-full">Made by 🙍‍♂️ dafa (Danylo)</div>;
+	return <div className="text-center w-full">LiteBlog made by 🙍‍♂️ dafa (Danylo)</div>;
 };
 
 export default Footer;

@@ -20,3 +20,8 @@ export const signupSchema = z
 			});
 		}
 	});
+
+export const articleSchema = z.object({
+	title: z.string().min(1).max(255),
+	content: z.string(),
+});
