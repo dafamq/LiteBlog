@@ -7,7 +7,7 @@ export interface IUser {
 export interface ISession {
 	id: string;
 	userId: string;
-	expireAt: string;
+	expiresAt: string;
 }
 
 export interface IArticle {

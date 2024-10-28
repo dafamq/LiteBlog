@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 
 const app = new Hono().basePath("/api");
 
-app.use(cors());
+app.use("*", cors());
 
 app.post(
 	"/signup",
@@ -102,12 +102,15 @@ app.post(
 			);
 		}
 
-		const session = await db.insert(sessions).values({
-			userId: user.id,
-			expiresAt: dayjs().add(14, "day").toDate(),
-		});
+		const [session] = await db
+			.insert(sessions)
+			.values({
+				userId: user.id,
+				expiresAt: dayjs().add(14, "day").toDate(),
+			})
+			.returning();
 
-		return c.json({ session });
+		return c.json({ success: true, session });
 	}
 );
 
@@ -141,6 +144,27 @@ app.get("/logout/:id", authMiddleware, async (c) => {
 	return c.json({
 		success: true,
 		message: "Successfully logged out",
+	});
+});
+
+app.get("/user/:id", async (c) => {
+	const id = c.req.param("id");
+
+	const user = await db.query.users.findFirst({
+		where: eq(users.id, id),
+	});
+
+	if (!user) {
+		return c.json({ success: false, error: "User not found" }, 404);
+	}
+
+	return c.json({
+		success: true,
+		user: {
+			id: user.id,
+			email: user.email,
+			createdAt: user.createdAt,
+		},
 	});
 });
 
@@ -195,7 +219,7 @@ app.get("/articles/:id", async (c) => {
 		return c.json({ success: false, error: "Article not found" }, 404);
 	}
 
-	return c.json({ article });
+	return c.json({ success: true, article });
 });
 
 app.post(

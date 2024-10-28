@@ -1,12 +1,12 @@
+import { useAuth } from "@/stores/auth.store";
 import axios, { isAxiosError } from "axios";
 
 export const api = axios.create({
-	baseURL: "http://localhost:3000/api",
+	baseURL: import.meta.env.VITE_API_URL,
 });
 
 api.interceptors.request.use((config) => {
-	// TODO: get session from storage
-	const session = { id: "temp", userId: "temp", expiresAt: "never" };
+	const session = useAuth.getState().session;
 	if (session) {
 		config.headers.Authorization = `Bearer ${session.id}`;
 	}
@@ -22,7 +22,8 @@ api.interceptors.response.use(
 			error.response &&
 			error.response.status === 401
 		) {
-			// TODO: redirect user to login page and remove token
+			useAuth.setState({ session: null });
+			window.location.href = "/login";
 		}
 
 		return Promise.reject(error);
