@@ -26,7 +26,7 @@ export const sessions = pgTable("sessions", {
 		.primaryKey()
 		.$defaultFn(() => createId()),
 	userId: text("userId")
-		.references(() => users.id)
+		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
 	expiresAt: timestamp("expiresAt", { mode: "date" }).notNull(),
 });
@@ -38,7 +38,7 @@ export const articles = pgTable("articles", {
 	title: text("title").notNull(),
 	content: text("content").notNull(),
 	authorId: text("authorId")
-		.references(() => users.id)
+		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
 	publishedAt: timestamp("publishedAt", { mode: "date" })
 		.notNull()
@@ -51,10 +51,10 @@ export const comments = pgTable("comments", {
 		.$defaultFn(() => createId()),
 	content: text("content").notNull(),
 	authorId: text("authorId")
-		.references(() => users.id)
+		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
 	articleId: text("articleId")
-		.references(() => articles.id)
+		.references(() => articles.id, { onDelete: "cascade" })
 		.notNull(),
 	createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 });
