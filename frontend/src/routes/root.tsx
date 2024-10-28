@@ -1,14 +1,14 @@
 import { Content, generateHTML, JSONContent } from "@tiptap/core";
 import { useEffect, useState } from "react";
-import { MinimalTiptapEditor } from "./components/minimal-tiptap";
-import { TooltipProvider } from "./components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { MinimalTiptapEditor } from "@/components/minimal-tiptap";
 import { StarterKit } from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Color from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 
-const App = () => {
+const Root = () => {
 	const [value, setValue] = useState<Content>("");
 	const [html, setHtml] = useState<string>("");
 
@@ -43,4 +43,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default Root;
