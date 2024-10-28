@@ -1,15 +1,25 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import { pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
-export const users = pgTable("users", {
-	id: text("id")
-		.primaryKey()
-		.$defaultFn(() => createId()),
-	email: text("email").notNull().unique(),
-	password: text("password").notNull(),
-	createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-});
+export const users = pgTable(
+	"users",
+	{
+		id: text("id")
+			.primaryKey()
+			.$defaultFn(() => createId()),
+		email: text("email").notNull(),
+		password: text("password").notNull(),
+		createdAt: timestamp("createdAt", { mode: "date" })
+			.notNull()
+			.defaultNow(),
+	},
+	(table) => ({
+		emailUniqueIndex: uniqueIndex("emailUniqueIndex").on(
+			sql`lower(${table.email})`
+		),
+	})
+);
 
 export const sessions = pgTable("sessions", {
 	id: text("id")
