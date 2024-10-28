@@ -10,20 +10,22 @@ const Discover = () => {
 	const navigate = useNavigate();
 	const auth = useAuth();
 
-	if (!data || isLoading)
+	if (!data || isLoading) {
 		return (
 			<div className="flex justify-center items-center h-full">
 				<Spinner className="size-8" />
 			</div>
 		);
+	}
 
-	if (error)
+	if (error) {
 		return (
 			<div className="flex flex-col justify-center items-center h-full">
 				<span className="text-red-400">Error loading</span>
 				<p>{error.message}</p>
 			</div>
 		);
+	}
 
 	return (
 		<div className="flex justify-center h-full p-4">

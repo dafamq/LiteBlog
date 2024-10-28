@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 type articleSchemaData = z.infer<typeof articleSchema>;
@@ -27,12 +28,15 @@ const CreateArticle = () => {
 			content: "",
 		},
 	});
+	const navigate = useNavigate();
 
 	const mutation = useMutation({
 		mutationFn: async (data: articleSchemaData) => {
 			return await api.post("/articles", data).then((res) => res.data);
 		},
-		onSuccess: () => {},
+		onSuccess: () => {
+			navigate("/discover");
+		},
 		onError(error) {
 			if (!isAxiosError(error)) {
 				form.setError("root", { message: error.message });
@@ -83,9 +87,6 @@ const CreateArticle = () => {
 										editorContentClassName="p-5"
 										placeholder="Type something..."
 										output="json"
-										autofocus={true}
-										editable={true}
-										editorClassName="focus:outline-none"
 									/>
 								</FormControl>
 							</FormItem>

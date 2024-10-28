@@ -256,7 +256,7 @@ app.patch(
 		"json",
 		z.object({
 			title: z.string().min(1).max(255),
-			content: z.string().min(1),
+			content: z.string(),
 		})
 	),
 	async (c) => {

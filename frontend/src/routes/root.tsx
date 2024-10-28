@@ -6,9 +6,9 @@ import { Outlet } from "react-router-dom";
 const Root = () => {
 	return (
 		<TooltipProvider>
-			<div className="flex flex-col min-h-full">
+			<div className="flex flex-col min-h-full h-full">
 				<Header />
-				<main className="flex-auto size-full">
+				<main className="flex-auto">
 					<Outlet />
 				</main>
 				<Footer />
