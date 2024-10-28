@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { isAxiosError } from "axios";
+import Comments from "@/components/comments";
 
 const Article = () => {
 	const { id } = useParams();
@@ -94,21 +95,26 @@ const Article = () => {
 				</div>
 			</div>
 			<div
-				className="prose max-w-2xl p-4 pt-0 break-words"
+				className="prose max-w-2xl p-4 pt-0 break-words w-full"
 				dangerouslySetInnerHTML={{ __html: html }}
 			/>
-			<div className="max-w-2xl w-full mb-10 p-2">
-				<Button
-					onClick={() => {
-						mutation.mutate();
-					}}
-					variant="destructive"
-					disabled={mutation.isPending}
-					className="w-full"
-				>
-					Delete this article
-				</Button>
-				<p className="text-red-400 text-center">{deleteError}</p>
+			{auth.isAuthenticated() && (
+				<div className="max-w-2xl w-full mb-10 p-2">
+					<Button
+						onClick={() => {
+							mutation.mutate();
+						}}
+						variant="destructive"
+						disabled={mutation.isPending}
+						className="w-full"
+					>
+						Delete this article
+					</Button>
+					<p className="text-red-400 text-center">{deleteError}</p>
+				</div>
+			)}
+			<div className="max-w-2xl w-full mb-10 p-2 min-h-20 h-full">
+				<Comments articleId={id!} />
 			</div>
 		</div>
 	);

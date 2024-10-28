@@ -312,13 +312,13 @@ app.delete("/articles/:id", authMiddleware, async (c) => {
 app.get("/comments/:articleId", async (c) => {
 	const articleId = c.req.param("articleId");
 
-	const foundArticles = await db.query.comments.findMany({
+	const foundComments = await db.query.comments.findMany({
 		where: eq(comments.articleId, articleId),
 	});
 
 	return c.json({
 		success: true,
-		articles: foundArticles,
+		comments: foundComments,
 	});
 });
 

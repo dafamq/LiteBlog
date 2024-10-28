@@ -23,5 +23,6 @@ export interface IComment {
 	id: string;
 	content: string;
 	authorId: string;
+	articleId: string;
 	createdAt: string;
 }

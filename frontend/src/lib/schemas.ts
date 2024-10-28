@@ -25,3 +25,7 @@ export const articleSchema = z.object({
 	title: z.string().min(1).max(255),
 	content: z.string(),
 });
+
+export const commentSchema = z.object({
+	content: z.string().min(1).max(255),
+});
